@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Job Application Tracker</h1>
+            <p>Track your internships and job applications</p>
+        </header>
+
+        <main>
+            <section class="stats">
+                <div class="stat-card">
+                    <h3>Total Applications</h3>
+                    <p id="total-applications">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Applied</h3>
+                    <p id="applied-count">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Interview</h3>
+                    <p id="interview-count">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Accepted</h3>
+                    <p id="accepted-count">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Rejected</h3>
+                    <p id="rejected-count">0</p>
+                </div>
+
+            </section>
+
+            <section class="form-section">
+                <form id="application-form">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" placeholder="Company Name" required>
+
+                    <label for="role">Role</label>
+                    <input type="text" id="role" placeholder="Role" required>
+
+                    <label for="status">Application Status</label>
+                    <select id="status">
+                        <option value="Applied">Applied</option>
+                        <option value="Interview">Interview</option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+
+                    <button type="submit">
+                        Add Application
+                    </button>
+                </form>
+            </section>
+
+            <section class="search-section">
+                <label for="search-input">Search Applications</label>
+                <input type="text" id="search-input" placeholder="Search company...">
+            </section>
+
+            <section class="applications-section">
+                <h2>Applications</h2>
+                <div id="application-list">
+                    <p id="empty-message">
+                        No applications added yet.
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
