@@ -1,3 +1,6 @@
+// API URL
+const API_URL = "http://localhost:5000/api/applications";
+
 // Get elements
 const form = document.getElementById("application-form");
 const companyInput = document.getElementById("company");
@@ -13,16 +16,19 @@ const interviewCount = document.getElementById("interview-count");
 const acceptedCount = document.getElementById("accepted-count");
 const rejectedCount = document.getElementById("rejected-count");
 
-// Load applications from localStorage
-let applications =
-    JSON.parse(localStorage.getItem("applications")) || [];
+let applications = [];
 
-// Save applications
-function saveApplications() {
-    localStorage.setItem(
-        "applications",
-        JSON.stringify(applications)
-    );
+// Fetch applications from MongoDB
+async function fetchApplications() {
+    try {
+        const response = await fetch(API_URL);
+
+        applications = await response.json();
+
+        displayApplications();
+    } catch (error) {
+        console.error("Error fetching applications:", error);
+    }
 }
 
 // Update stats cards
@@ -54,7 +60,6 @@ function updateStats() {
 
 // Display applications
 function displayApplications(list = applications) {
-
     applicationList.innerHTML = "";
 
     if (list.length === 0) {
@@ -66,21 +71,21 @@ function displayApplications(list = applications) {
     }
 
     list.forEach(app => {
-
         const card = document.createElement("div");
+
         card.classList.add("application-card");
 
         card.innerHTML = `
             <h3>${app.company}</h3>
             <p><strong>Role:</strong> ${app.role}</p>
-            <p><strong>Date:</strong> ${app.date}</p>
+            <p><strong>Date:</strong> ${new Date(app.date).toLocaleDateString("en-IN")}</p>
             <p>
                 <strong>Status:</strong>
                 <span class="status-${app.status.toLowerCase()}">
                     ${app.status}
                 </span>
             </p>
-            <button class="delete-btn" onclick="deleteApplication(${app.id})">
+            <button class="delete-btn" onclick="deleteApplication('${app._id}')">
                 Delete
             </button>
         `;
@@ -92,8 +97,7 @@ function displayApplications(list = applications) {
 }
 
 // Add application
-form.addEventListener("submit", function (e) {
-
+form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const company = companyInput.value.trim();
@@ -104,36 +108,47 @@ form.addEventListener("submit", function (e) {
     }
 
     const application = {
-        id: Date.now(),
-        company: company,
-        role: role,
-        status: statusInput.value,
-        date: new Date().toLocaleDateString("en-IN")
+        company,
+        role,
+        status: statusInput.value
     };
 
-    applications.push(application);
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(application)
+        });
 
-    saveApplications();
-    displayApplications();
+        if (response.ok) {
+            await fetchApplications();
 
-    form.reset();
-    companyInput.focus();
+            form.reset();
+            companyInput.focus();
+        }
+    } catch (error) {
+        console.error("Error adding application:", error);
+    }
 });
 
 // Delete application
-function deleteApplication(id) {
+async function deleteApplication(id) {
+    try {
+        await fetch(`${API_URL}/${id}`, {
+            method: "DELETE"
+        });
 
-    applications = applications.filter(app => app.id !== id);
-
-    saveApplications();
-    displayApplications();
+        await fetchApplications();
+    } catch (error) {
+        console.error("Error deleting application:", error);
+    }
 }
 
 // Search applications
 searchInput.addEventListener("input", function () {
-
-    const searchValue =
-        searchInput.value.toLowerCase();
+    const searchValue = searchInput.value.toLowerCase();
 
     const filteredApplications =
         applications.filter(app =>
@@ -145,4 +160,4 @@ searchInput.addEventListener("input", function () {
 });
 
 // Initial render
-displayApplications();
+fetchApplications();
