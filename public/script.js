@@ -1,5 +1,5 @@
 // API URL
-const API_URL = "http://localhost:5000/api/applications";
+const API_URL = "https://job-application-tracker-api-me4p.onrender.com/api/applications";
 
 // Get elements
 const form = document.getElementById("application-form");
