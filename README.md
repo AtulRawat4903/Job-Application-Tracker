@@ -1,4 +1,4 @@
-# Job Application Tracker
+## Job Application Tracker
 
 A web application for tracking internship and job applications.
 
@@ -15,3 +15,7 @@ A web application for tracking internship and job applications.
 - HTML
 - CSS
 - JavaScript
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
