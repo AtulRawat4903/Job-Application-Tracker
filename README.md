@@ -1,6 +1,6 @@
 ## Job Application Tracker
 
-A web application for tracking internship and job applications.
+A web application designed for tracking internship and job applications.
 
 ## Features
 
@@ -8,7 +8,7 @@ A web application for tracking internship and job applications.
 - Delete applications
 - Track application status
 - Search applications
-- Save data using localStorage
+- Save data using Node.js & MongoDB
 
 ## Technologies Used
 
