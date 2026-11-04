@@ -38,7 +38,7 @@ A full-stack web application that helps users organize and track their internshi
 ## 🚀 Demo
 
 - **Live Application:** https://job-application-tracker-psi-lyart.vercel.app/
-- **Backend API:** https://job-application-tracker-api-me4p.onrender.com
+- **Backend API:** https://job-application-tracker-igar.onrender.com
 
 ---
 
